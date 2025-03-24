@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 16
+  pre_build:
+    commands:
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 943897082161.dkr.ecr.us-east-1.amazonaws.com
+      - REPO_URI=943897082161.dkr.ecr.us-east-1.amazonaws.com/nodejsapp
+  build:
+    commands:
+      - docker build -t $REPO_URI:latest .
+      - docker push $REPO_URI:latest
+  post_build:
+    commands:
+      - - printf '[{"name":"nodejsapp_service","imageUri":"%s"}]' 943897082161.dkr.ecr.us-east-1.amazonaws.com/nodejsapp:latest > nodejsapp_service.json
+      - echo "Build complete"
+artifacts:
+  files:
+    nodejsapp_service.json
