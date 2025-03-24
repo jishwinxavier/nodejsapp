@@ -14,7 +14,7 @@ phases:
       - docker push $REPO_URI:latest
   post_build:
     commands:
-      - - printf '[{"name":"nodejsapp_service","imageUri":"%s"}]' 943897082161.dkr.ecr.us-east-1.amazonaws.com/nodejsapp:latest > nodejsapp_service.json
+      - printf '[{"name":"nodejsapp_service","imageUri":"%s"}]' 943897082161.dkr.ecr.us-east-1.amazonaws.com/nodejsapp:latest > nodejsapp_service.json
       - echo "Build complete"
 artifacts:
   files:
